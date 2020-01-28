@@ -1,0 +1,60 @@
+# data
+# item_attributes: ./example-data/item_attributes_csr.npz
+# train_tsv: ./example-data/train.tsv
+# valid_tsv: ./example-data/validation.tsv
+# test_tsv: ./example-data/test.tsv
+# test_users_tsv: ./example-data/test_users.tsv
+
+# for arxiv data
+# item_attributes: $DAT/arxiv_clean/n_docs636222_vocab_size14000_csr.npz
+# train_tsv: $DAT/arxiv_clean/train.tsv
+# valid_tsv: $DAT/arxiv_clean/validation.tsv
+# test_tsv: $DAT/arxiv_clean/test.tsv
+# test_users_tsv: null
+
+# debug / simulation
+train_tsv: $DAT/set_rec/simulation/train.tsv
+valid_tsv: $DAT/set_rec/simulation/valid.tsv
+test_tsv: $DAT/set_rec/simulation/test.tsv
+test_users_tsv: $DAT/set_rec/simulation/test_users.tsv
+#test_users_tsv: null
+item_attributes: $DAT/set_rec/simulation/item_attributes_csr.npz
+
+# use CUDA pinned memory: much faster on GPU
+pin_memory: true
+# number of worker processes for loading data
+num_workers: 8
+
+# whether to use a gpu
+use_gpu: true
+
+# logging options
+train_dir: $TMPDIR
+log_interval: 20000
+log_dir: $TMPDIR
+experiment_name: test-experiment
+clear_dir: false
+number_of_recommendations: [10, 30, 50, 70, 100]
+eval_batch_size: null
+
+# model options
+model: InnerProduct
+inner_product_checkpoint: null
+emb_size: 100
+padding_idx: 0
+# for models with a neural network
+hidden_size: 1024
+dropout: 0.0
+resnet: false
+
+# optimization
+time: string_format_time
+max_iterations: 1000
+learning_rate: 15.0
+momentum: 0.9
+batch_size: 65536
+sparse: true
+# learning rate decay:
+#   - linear (decay to zero in max_iterations) 
+#   - plateau (divide by ten if no validation improvement)
+lr_decay: linear
